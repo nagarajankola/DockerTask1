@@ -1,0 +1,30 @@
+version: '3'
+
+services:
+  mysqlos:
+    image: mysql:5.7
+    volumes:
+      - ownsql:/var/lib/mysql
+    restart: always
+    environment: 
+      MYSQL_ROOT_PASSWORD: 123
+
+  owncloud1:
+    image: owncloud:latest
+    volumes:
+      - cloud:/var/www/html
+      - data:/var/www/html/data
+      - config:/var/www/html/config
+      - apps:/var/www/html/apps
+    restart: always
+    ports: 
+      - 4321:80
+    depends_on:
+      - mysqlos
+
+volumes:
+  ownsql:
+  cloud:
+  data:
+  apps:
+  config:
